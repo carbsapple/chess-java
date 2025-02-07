@@ -33,7 +33,7 @@ public class Main {
             String piece = scnr.next();
             System.out.println("Enter the position where you want to move the piece: ");
             String move = scnr.next();
-            if (Piece.isValid(revHash.get(piece.charAt(0)), revRHash[piece.charAt(1) - '0'], revHash.get(move.charAt(0)), revRHash[move.charAt(1) - '0'])) {
+            if (Piece.isValid(revRHash[piece.charAt(1) - '0'], revHash.get(piece.charAt(0)), revRHash[move.charAt(1) - '0'], revHash.get(move.charAt(0)))) {
                 Piece temp = Board.board[revRHash[piece.charAt(1) - '0']][revHash.get(piece.charAt(0))];
                 Board.board[revRHash[move.charAt(1) - '0']][revHash.get(move.charAt(0))] = temp;
                 Board.board[revRHash[piece.charAt(1) - '0']][revHash.get(piece.charAt(0))] = new Piece(0, false);
