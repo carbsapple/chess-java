@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.Scanner;
 public class Main {
     private static final Map<Character, Integer> revHash = new HashMap<>();
-    private static final int[] revRHash = {-1, 0, 1, 2, 3, 4, 5, 6, 7};
+    private static final int[] revRHash = {-1, 7, 6, 5, 4, 3, 2, 1, 0};
 
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
@@ -34,9 +34,9 @@ public class Main {
             System.out.println("Enter the position where you want to move the piece: ");
             String move = scnr.next();
             if (Piece.isValid(revHash.get(piece.charAt(0)), revRHash[piece.charAt(1) - '0'], revHash.get(move.charAt(0)), revRHash[move.charAt(1) - '0'])) {
-                Piece temp = Board.board[revHash.get(piece.charAt(0))][revRHash[piece.charAt(1) - '0']];
-                Board.board[revHash.get(move.charAt(0))][revRHash[move.charAt(1) - '0']] = temp;
-                Board.board[revHash.get(piece.charAt(0))][revRHash[piece.charAt(1) - '0']] = new Piece(0, false);
+                Piece temp = Board.board[revRHash[piece.charAt(1) - '0']][revHash.get(piece.charAt(0))];
+                Board.board[revRHash[move.charAt(1) - '0']][revHash.get(move.charAt(0))] = temp;
+                Board.board[revRHash[piece.charAt(1) - '0']][revHash.get(piece.charAt(0))] = new Piece(0, false);
                 Board.showBoard();
             } else {
                 System.out.println("Invalid move. Try again.");
