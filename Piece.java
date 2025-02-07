@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 public class Piece{
     //0=empty, 1=pawn, 2=knight, 3=bishop, 4=rook, 5=queen, 6=king
-    private  int ident;
+    private final int ident;
     private String name;
-    private ArrayList<String> legalMove=new ArrayList<String>();
-    private boolean isWhite;
+    private ArrayList<String> legalMove=new ArrayList<>();
+    private final boolean isWhite;
     private static final char[] hash = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private static final int[] rhash = {8, 7, 6, 5, 4, 3, 2, 1};
     public Piece(int i, boolean white){
         ident=i;
         isWhite=white;
@@ -47,26 +48,26 @@ public class Piece{
 
             if (row-1 > -1 && col+1 < 8) {
                 toAdd+=hash[col+1];
-                toAdd+=Integer.toString(row-1);
+                toAdd+=Integer.toString(rhash[row-1]);
 
                 legalMove.add(toAdd);
             }
             toAdd = "";
             if (row - 1 > 0 && col - 1 > 0) {
                 toAdd+=hash[col-1];
-                toAdd+=Integer.toString(row-1);
+                toAdd+=Integer.toString(rhash[row-1]);
                 legalMove.add(toAdd);
             }
             toAdd = "";
             if(row-1>0){
                 toAdd+=hash[col];
-                toAdd+=Integer.toString(row-1);
+                toAdd+=Integer.toString(rhash[row-1]);
                 legalMove.add(toAdd);
             }
             toAdd = "";
             if(row-2>0){
                 toAdd+=hash[col];
-                toAdd+=Integer.toString(row-2);
+                toAdd+=Integer.toString(rhash[row-2]);
                 legalMove.add(toAdd);
             }
         }
@@ -75,26 +76,26 @@ public class Piece{
 
             if (row+1 < 8 && col+1 < 8) {
                 toAdd+=hash[col+1];
-                toAdd+=Integer.toString(row+1);
+                toAdd+=Integer.toString(rhash[row+1]);
 
                 legalMove.add(toAdd);
             }
             toAdd = "";
             if (row + 1 < 8 && col - 1 > 0) {
                 toAdd+=hash[col-1];
-                toAdd+=Integer.toString(row+1);
+                toAdd+=Integer.toString(rhash[row+1]);
                 legalMove.add(toAdd);
             }
             toAdd = "";
             if(row+1<8){
                 toAdd+=hash[col];
-                toAdd+=Integer.toString(row+1);
+                toAdd+=Integer.toString(rhash[row+1]);
                 legalMove.add(toAdd);
             }
             toAdd = "";
             if(row+2<8){
                 toAdd+=hash[col];
-                toAdd+=Integer.toString(row+2);
+                toAdd+=Integer.toString(rhash[row+2]);
                 legalMove.add(toAdd);
             }
         }
@@ -104,53 +105,53 @@ public class Piece{
         String toAdd = new String();
         if (row-1 > -1 && col+2 < 8) {
             toAdd+=hash[col+2];
-            toAdd+=Integer.toString(row-1);
+            toAdd+=Integer.toString(rhash[row-1]);
             legalMove.add(toAdd);
         }
         toAdd = "";
         if (row-1 > -1 && col-2 > -1) {
             toAdd+=hash[col-2];
-            toAdd+=Integer.toString(row-1);
+            toAdd+=Integer.toString(rhash[row-1]);
 
             legalMove.add(toAdd);
         }
         toAdd = "";
         if (row-2 > -1 && col+1 < 8) {
             toAdd+=hash[col+1];
-            toAdd+=Integer.toString(row-2);
+            toAdd+=Integer.toString(rhash[row-2]);
 
             legalMove.add(toAdd);
         }
         toAdd = "";
         if (row-2 > -1 && col-1 > -1) {
             toAdd+=hash[col-1];
-            toAdd+=Integer.toString(row-2);
+            toAdd+=Integer.toString(rhash[row-2]);
 
             legalMove.add(toAdd);
         }
         toAdd = "";
         if (row+1 < 8 && col+2 < 8) {
             toAdd+=hash[col+2];
-            toAdd+=Integer.toString(row+1);
+            toAdd+=Integer.toString(rhash[row+1]);
             legalMove.add(toAdd);
         }
         toAdd = "";
         if (row+1 < 8 && col-2 > -1) {
             toAdd+=hash[col-2];
-            toAdd+=Integer.toString(row+1);
+            toAdd+=Integer.toString(rhash[row+1]);
             legalMove.add(toAdd);
         }
         toAdd = "";
         if (row+2 < 8 && col+1 < 8) {
             toAdd+=hash[col+1];
-            toAdd+=Integer.toString(row+2);
+            toAdd+=Integer.toString(rhash[row+2]);
             legalMove.add(toAdd);
         }
         
         toAdd = "";
         if (row+2 < 8 && col-1 > -1) {
             toAdd+=hash[col-1];
-            toAdd+=Integer.toString(row+2);
+            toAdd+=Integer.toString(rhash[row+2]);
             legalMove.add(toAdd);
         }
     }
@@ -161,14 +162,11 @@ public class Piece{
         while (tempr+1<8&&tempc+1<8) { 
             //cannot move past a piece
             if (Board.board[tempr+1][tempc+1].getId()!=0) {
-                toAdd+=hash[++tempc];
-                toAdd+=Integer.toString(++tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[++tempc];
-            toAdd+=Integer.toString(++tempr);
+            toAdd+=Integer.toString(rhash[++tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -177,14 +175,11 @@ public class Piece{
         while (tempr-1>-1&&tempc+1<8) { 
             //cannot move past a piece
             if (Board.board[tempr-1][tempc+1].getId()!=0) {
-                toAdd+=hash[++tempc];
-                toAdd+=Integer.toString(--tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[++tempc];
-            toAdd+=Integer.toString(--tempr);
+            toAdd+=Integer.toString(rhash[--tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -193,14 +188,11 @@ public class Piece{
         while (tempr+1<8&&tempc-1>-1) { 
             //cannot move past a piece
             if (Board.board[tempr+1][tempc-1].getId()!=0) {
-                toAdd+=hash[--tempc];
-                toAdd+=Integer.toString(++tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[--tempc];
-            toAdd+=Integer.toString(++tempr);
+            toAdd+=Integer.toString(rhash[++tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -209,14 +201,11 @@ public class Piece{
         while (tempr-1>-1&&tempc-1>-1) { 
             //cannot move past a piece
             if (Board.board[tempr-1][tempc-1].getId()!=0) {
-                toAdd+=hash[--tempc];
-                toAdd+=Integer.toString(--tempr);
-                legalMove.add(toAdd);
                 break;
             }
             
             toAdd+=hash[--tempc];
-            toAdd+=Integer.toString(--tempr);
+            toAdd+=Integer.toString(rhash[--tempr]);
             legalMove.add(toAdd);
         }
     }
@@ -227,14 +216,11 @@ public class Piece{
         
         while(tempr+1<8){
             if (Board.board[tempr+1][tempc].getId()!=0) {
-                toAdd+=hash[tempc];
-                toAdd+=Integer.toString(tempr+1);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[tempc];
-            toAdd+=Integer.toString(++tempr);
+            toAdd+=Integer.toString(rhash[++tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -242,14 +228,11 @@ public class Piece{
         tempc=col;
         while(tempr-1>-1){
             if (Board.board[tempr-1][tempc].getId()!=0) {
-                toAdd+=hash[tempc];
-                toAdd+=Integer.toString(--tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[tempc];
-            toAdd+=Integer.toString(tempr-1);
+            toAdd+=Integer.toString(rhash[--tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -257,13 +240,10 @@ public class Piece{
         tempc=col;
         while(tempc+1<8){
             if (Board.board[tempr][tempc+1].getId()!=0) {
-                toAdd+=hash[tempc+1];
-                toAdd+=Integer.toString(tempr);
-                legalMove.add(toAdd);
                 break;
             }
             toAdd+=hash[++tempc];
-            toAdd+=Integer.toString(tempr);
+            toAdd+=Integer.toString(rhash[tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -271,13 +251,10 @@ public class Piece{
         tempc=col;
         while(tempc-1>-1){
             if (Board.board[tempr][tempc-1].getId()!=0) {
-                toAdd+=hash[tempc-1];
-                toAdd+=Integer.toString(tempr);
-                legalMove.add(toAdd);
                 break;
             }
             toAdd+=hash[--tempc];
-            toAdd+=Integer.toString(tempr);
+            toAdd+=Integer.toString(rhash[tempr]);
             legalMove.add(toAdd);
         }
     }
@@ -288,14 +265,11 @@ public class Piece{
         //rook moves
         while(tempr+1<8){
             if (Board.board[tempr+1][tempc].getId()!=0) {
-                toAdd+=hash[tempc];
-                toAdd+=Integer.toString(tempr+1);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[tempc];
-            toAdd+=Integer.toString(++tempr);
+            toAdd+=Integer.toString(rhash[++tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -303,14 +277,11 @@ public class Piece{
         tempc=col;
         while(tempr-1>-1){
             if (Board.board[tempr-1][tempc].getId()!=0) {
-                toAdd+=hash[tempc];
-                toAdd+=Integer.toString(--tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[tempc];
-            toAdd+=Integer.toString(tempr-1);
+            toAdd+=Integer.toString(rhash[--tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -318,13 +289,10 @@ public class Piece{
         tempc=col;
         while(tempc+1<8){
             if (Board.board[tempr][tempc+1].getId()!=0) {
-                toAdd+=hash[tempc+1];
-                toAdd+=Integer.toString(tempr);
-                legalMove.add(toAdd);
                 break;
             }
             toAdd+=hash[++tempc];
-            toAdd+=Integer.toString(tempr);
+            toAdd+=Integer.toString(rhash[tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -332,13 +300,10 @@ public class Piece{
         tempc=col;
         while(tempc-1>-1){
             if (Board.board[tempr][tempc-1].getId()!=0) {
-                toAdd+=hash[tempc-1];
-                toAdd+=Integer.toString(tempr);
-                legalMove.add(toAdd);
                 break;
             }
             toAdd+=hash[--tempc];
-            toAdd+=Integer.toString(tempr);
+            toAdd+=Integer.toString(rhash[tempr]);
             legalMove.add(toAdd);
         }
         //bishop moves
@@ -348,14 +313,11 @@ public class Piece{
         while (tempr+1<8&&tempc+1<8) { 
             //cannot move past a piece
             if (Board.board[tempr+1][tempc+1].getId()!=0) {
-                toAdd+=hash[++tempc];
-                toAdd+=Integer.toString(++tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[++tempc];
-            toAdd+=Integer.toString(++tempr);
+            toAdd+=Integer.toString(rhash[++tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -364,14 +326,11 @@ public class Piece{
         while (tempr-1>-1&&tempc+1<8) { 
             //cannot move past a piece
             if (Board.board[tempr-1][tempc+1].getId()!=0) {
-                toAdd+=hash[++tempc];
-                toAdd+=Integer.toString(--tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[++tempc];
-            toAdd+=Integer.toString(--tempr);
+            toAdd+=Integer.toString(rhash[--tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -380,14 +339,11 @@ public class Piece{
         while (tempr+1<8&&tempc-1>-1) { 
             //cannot move past a piece
             if (Board.board[tempr+1][tempc-1].getId()!=0) {
-                toAdd+=hash[--tempc];
-                toAdd+=Integer.toString(++tempr);
-                legalMove.add(toAdd);
                 break;
             }
 
             toAdd+=hash[--tempc];
-            toAdd+=Integer.toString(++tempr);
+            toAdd+=Integer.toString(rhash[++tempr]);
             legalMove.add(toAdd);
         }
         toAdd="";
@@ -396,71 +352,77 @@ public class Piece{
         while (tempr-1>-1&&tempc-1>-1) { 
             //cannot move past a piece
             if (Board.board[tempr-1][tempc-1].getId()!=0) {
-                toAdd+=hash[--tempc];
-                toAdd+=Integer.toString(--tempr);
-                legalMove.add(toAdd);
                 break;
             }
             
             toAdd+=hash[--tempc];
-            toAdd+=Integer.toString(--tempr);
+            toAdd+=Integer.toString(rhash[--tempr]);
             legalMove.add(toAdd);
         }
     }
 
     public void addKingMoves(int row, int col){
+        row = 7-row;
         String toAdd=new String();
         if(row-1>-1){
             toAdd+=hash[col];
-            toAdd+=Integer.toString(row-1);
+            toAdd+=Integer.toString(rhash[row-1]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(row+1<8){
             toAdd+=hash[col];
-            toAdd+=Integer.toString(row+1);
+            toAdd+=Integer.toString(rhash[row+1]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(col-1>-1){
             toAdd+=hash[col-1];
-            toAdd+=Integer.toString(row);
+            toAdd+=Integer.toString(rhash[row]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(col+1<8){
             toAdd+=hash[col+1];
-            toAdd+=Integer.toString(row);
+            toAdd+=Integer.toString(rhash[row]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(row-1>-1&&col-1>-1){
             toAdd+=hash[col-1];
-            toAdd+=Integer.toString(row-1);
+            toAdd+=Integer.toString(rhash[row-1]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(row-1>-1&&col+1<8){
             toAdd+=hash[col+1];
-            toAdd+=Integer.toString(row-1);
+            toAdd+=Integer.toString(rhash[row-1]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(row+1<8&&col-1>-1){
             toAdd+=hash[col-1];
-            toAdd+=Integer.toString(row+1);
+            toAdd+=Integer.toString(rhash[row+1]);
             legalMove.add(toAdd);
         }
         toAdd="";
         if(row+1<8&&col+1<8){
             toAdd+=hash[col+1];
-            toAdd+=Integer.toString(row+1);
+            toAdd+=Integer.toString(rhash[row+1]);
             legalMove.add(toAdd);
         }
     }
 
-    public boolean isValid(int row, int column,int newRow,int newCol){//parameters contain location of piece
+    public void PrintLegal () {
+        for (String i : legalMove) {
+            System.out.println(i);
+        }
+        System.out.println();
+        System.out.println();
+    }
 
-        return false;
+    public static boolean isValid(int row, int column,int newRow,int newCol){//parameters contain location of piece
+
+        return true;
     }
 }
